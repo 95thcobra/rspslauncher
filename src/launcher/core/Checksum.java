@@ -23,6 +23,7 @@ public class Checksum {
 			version = br.readLine();
 			br.close();
 		} catch (Exception e) {
+			e.printStackTrace();
 		}
 		System.out.println("local client version: " + version);
 		return version;
@@ -35,6 +36,7 @@ public class Checksum {
 			version = br.readLine();
 			br.close();
 		} catch (Exception e) {
+			e.printStackTrace();
 		}
 		System.out.println("local cache version: " + version);
 		return version;
@@ -48,6 +50,7 @@ public class Checksum {
 			version = s.nextLine();
 			s.close();
 		} catch (Exception e) {
+			e.printStackTrace();
 		}
 		System.out.println("remote client version: " + version);
 		return version;
@@ -61,6 +64,7 @@ public class Checksum {
 			version = s.nextLine();
 			s.close();
 		} catch (Exception e) {
+			e.printStackTrace();
 		}
 		System.out.println("remote cache version: " + version);
 		return version;
@@ -70,7 +74,7 @@ public class Checksum {
 		BufferedWriter writer;
 		try {
 			writer = new BufferedWriter(new FileWriter(Configuration.LOCAL_CLIENT_VERSION_PATH));
-			System.out.println("write:"+getRemoteClientVersion());
+			System.out.println("write: " + getRemoteClientVersion());
 			writer.write(getRemoteClientVersion());
 			writer.close();
 		} catch (Exception e) {
@@ -82,7 +86,7 @@ public class Checksum {
 		BufferedWriter writer;
 		try {
 			writer = new BufferedWriter(new FileWriter(Configuration.LOCAL_CACHE_VERSION_PATH));
-			System.out.println("write:"+getRemoteCacheVersion());
+			System.out.println("write: " + getRemoteCacheVersion());
 			writer.write(getRemoteCacheVersion());
 			writer.close();
 		} catch (Exception e) {
