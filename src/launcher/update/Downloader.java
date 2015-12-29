@@ -8,6 +8,7 @@ import java.net.URL;
 import java.util.Observable;
 
 import launcher.Configuration;
+import launcher.core.Checksum;
 import launcher.core.Frame;
 
 public class Downloader extends Observable implements Runnable {
@@ -137,7 +138,8 @@ public class Downloader extends Observable implements Runnable {
 				downloaded += read;
 				stateChanged();
 			}
-
+			Checksum.writeUpdateToFileClient();
+			
 			if (status == DOWNLOADING) {
 				status = COMPLETE;
 				stateChanged();

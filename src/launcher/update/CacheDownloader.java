@@ -74,6 +74,7 @@ public class CacheDownloader implements Runnable {
 				unZip();
 			}
 			Frame.label.setText("Ready.");
+			Checksum.writeUpdateToFileCache();
 		} catch (Exception e) {
 
 		}

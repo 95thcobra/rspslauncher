@@ -94,17 +94,40 @@ public class Checksum {
 		}
 	}
 
-	public static boolean handleTextClientUpdate() {
+	public static void writeUpdateToFileClient() {
 		File file = new File(Configuration.LOCAL_CLIENT_VERSION_PATH);
 		if (!file.exists()) {
 			try {
 				file.createNewFile();
-				writeCurrentClientVersion();
-				return false;
+
 			} catch (Exception e) {
 			}
+		}
+		writeCurrentClientVersion();
+	}
+
+	public static void writeUpdateToFileCache() {
+		File file = new File(Configuration.LOCAL_CACHE_VERSION_PATH);
+		if (!file.exists()) {
+			try {
+				file.createNewFile();
+				writeCurrentCacheVersion();
+			} catch (Exception e) {
+			}
+		}
+		writeCurrentCacheVersion();
+	}
+
+	public static boolean handleTextClientUpdate() {
+		File file = new File(Configuration.LOCAL_CLIENT_VERSION_PATH);
+		if (!file.exists()) {
+			return false;
+			/*
+			 * try { file.createNewFile(); writeCurrentClientVersion(); return
+			 * false; } catch (Exception e) { }
+			 */
 		} else if (!getLocalClientVersion().equals(getRemoteClientVersion())) {
-			writeCurrentClientVersion();
+			// writeCurrentClientVersion();
 			return false;
 		}
 		return true;
@@ -113,14 +136,13 @@ public class Checksum {
 	public static boolean handleTextCacheUpdate() {
 		File file = new File(Configuration.LOCAL_CACHE_VERSION_PATH);
 		if (!file.exists()) {
-			try {
-				file.createNewFile();
-				writeCurrentCacheVersion();
-				return false;
-			} catch (Exception e) {
-			}
+			return false;
+			/*
+			 * try { file.createNewFile(); writeCurrentCacheVersion(); return
+			 * false; } catch (Exception e) { }
+			 */
 		} else if (!getLocalCacheVersion().equals(getRemoteCacheVersion())) {
-			writeCurrentCacheVersion();
+			// writeCurrentCacheVersion();
 			return false;
 		}
 		return true;

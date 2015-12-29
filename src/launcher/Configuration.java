@@ -4,7 +4,7 @@ import java.io.File;
 
 public class Configuration {
 
-	public static final String TITLE = "Guthix";
+	public static final String TITLE = "Launcher";
 
 	/**
 	 * Update by checking versions textfile. You only need to update these if
