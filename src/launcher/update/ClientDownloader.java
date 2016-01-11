@@ -20,21 +20,26 @@ public class ClientDownloader implements Runnable {
 		thread.start();
 	}
 
-	private boolean downloadClient() {
+	private boolean clientExists() {
 		if (!file.exists()) {
 			new Downloader(Configuration.CLIENT_URL).download();
 			return true;
 		}
 		return false;
 	}
+	
+	private void downloadClient() {
+		new Downloader(Configuration.CLIENT_URL).download();
+	}
 
 	@Override
 	public void run() {
-		if (downloadClient()) {
+		if (clientExists()) {
 			return;
 		}
 		if (!Checksum.isClientUpToDate()) {
-			Frame.label.setText("Updating client...");
+			//Frame.label.setText("Updating client...");
+			Frame.progressBar.setString("Updating client...");
 			file.delete();
 			downloadClient();
 		}

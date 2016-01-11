@@ -30,7 +30,8 @@ public class ButtonListener implements ActionListener {
 			Client.runClient();
 			break;
 		case "fetch update":
-			Frame.label.setText("Checking for updates...");
+			//Frame.label.setText("Checking for updates...");
+			Frame.progressBar.setString("Checking for updates...");
 			Update.check();
 			break;
 		case "forums":
@@ -41,6 +42,9 @@ public class ButtonListener implements ActionListener {
 			break;
 		case "store":
 			Utility.browse(Configuration.STORE_URL);
+			break;
+		case "highscores":
+			Utility.browse(Configuration.HIGHSCORES_URL);
 			break;
 		default:
 			System.out.println("Unhandled command: " + command);

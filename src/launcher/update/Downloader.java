@@ -84,7 +84,6 @@ public class Downloader extends Observable implements Runnable {
 	public void run() {
 		RandomAccessFile file = null;
 		InputStream stream = null;
-
 		try {
 			HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 			connection.setRequestProperty("Range", "bytes=" + downloaded + "-");
@@ -128,9 +127,12 @@ public class Downloader extends Observable implements Runnable {
 					break;
 
 				int progress = (int) getProgress();
-
+				
+				Frame.downloadingClient = true;
 				if (progress > lastNum) {
-					Frame.label.setText("Updating client: " + progress + "%");
+					//Frame.label.setText("Updating client: " + progress + "%");
+					Frame.progressBar.setValue(progress);
+					Frame.progressBar.setString("Updating client: " + progress + "%");
 					lastNum = progress;
 				}
 
@@ -138,6 +140,10 @@ public class Downloader extends Observable implements Runnable {
 				downloaded += read;
 				stateChanged();
 			}
+			
+			Frame.progressBar.setValue(100);
+			Frame.progressBar.setString("Ready.");
+			Frame.downloadingClient = false;
 			Checksum.writeUpdateToFileClient();
 			
 			if (status == DOWNLOADING) {

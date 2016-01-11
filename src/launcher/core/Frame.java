@@ -1,13 +1,18 @@
 package launcher.core;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Rectangle;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JProgressBar;
+import javax.swing.border.Border;
 
 import launcher.Configuration;
 import launcher.utility.Utility;
@@ -16,10 +21,20 @@ import launcher.core.buttons.Button;
 @SuppressWarnings("serial")
 public class Frame extends JFrame {
 	public static JLabel label = new JLabel("");
-	public static JButton btnUpdate = new Button("Fetch Update", new Rectangle(200, 50, 130, 60));
+	public static final int BUTTON_Y = 330;
+	public static final int BUTTON_X = 30;
+	public static final int X_DIFF = 150;
+	public static final int BUTTON_WIDTH = 130;
+	public static final int BUTTON_HEIGHT = 60;
+	public static JButton btnUpdate = new Button("Fetch Update", new Rectangle(BUTTON_X + X_DIFF, BUTTON_Y, BUTTON_WIDTH, BUTTON_HEIGHT));
+	public static JProgressBar progressBar;
 	
+	public static boolean downloadingClient = false;
+
+	public static final int FRAME_WIDTH = 805;
+
 	public Frame() {
-		setPreferredSize(new Dimension(850, 300));
+		setPreferredSize(new Dimension(FRAME_WIDTH, 500));
 		setTitle(Configuration.TITLE);
 		setIconImage(Utility.getImage("icon.png"));
 	}
@@ -27,7 +42,7 @@ public class Frame extends JFrame {
 	public void init() {
 		setup();
 		setBackground();
-		
+
 		pack();
 		setLocationRelativeTo(null);
 		setVisible(true);
@@ -37,17 +52,29 @@ public class Frame extends JFrame {
 		JLabel background = new JLabel(Utility.getImageIcon("background.png"));
 		add(background);
 	}
-	
+
 	public void setup() {
-		add(new Button("Play Now", new Rectangle(50, 50, 130, 60)));
+		add(new Button("Play Now", new Rectangle(BUTTON_X, BUTTON_Y, 130, 60)));
 		add(btnUpdate);
-		add(new Button("Forums", new Rectangle(350, 50, 130, 60)));
-		add(new Button("Vote", new Rectangle(500, 50, 130, 60)));
-		add(new Button("Store", new Rectangle(650, 50, 130, 60)));
+		add(new Button("Forums", new Rectangle(BUTTON_X + (2 * X_DIFF), BUTTON_Y, BUTTON_WIDTH, BUTTON_HEIGHT)));
+		add(new Button("Store", new Rectangle(BUTTON_X + (3 * X_DIFF), BUTTON_Y, BUTTON_WIDTH, BUTTON_HEIGHT)));
+		add(new Button("Vote", new Rectangle(BUTTON_X + (4 * X_DIFF), BUTTON_Y, BUTTON_WIDTH, BUTTON_HEIGHT)));
 
 		label.setBounds(50, 150, 500, 50);
-		label.setForeground(new Color(116,118,120));
+		label.setForeground(new Color(116, 118, 120));
 		label.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 30));
 		add(label);
+
+		progressBar = new JProgressBar();
+		progressBar.setValue(100);
+		progressBar.setString("");
+		progressBar.setPreferredSize(new Dimension(620, 50));
+		progressBar.setStringPainted(true);
+
+		JPanel panel = new JPanel();
+		panel.setBackground(Color.GRAY);
+		progressBar.setForeground(Color.decode("0x049a04"));
+		add(progressBar, BorderLayout.SOUTH);
+
 	}
 }

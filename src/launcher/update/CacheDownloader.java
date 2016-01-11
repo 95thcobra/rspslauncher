@@ -73,7 +73,8 @@ public class CacheDownloader implements Runnable {
 
 				unZip();
 			}
-			Frame.label.setText("Ready.");
+			// Frame.label.setText("Ready.");
+			Frame.progressBar.setString("Ready.");
 			Checksum.writeUpdateToFileCache();
 		} catch (Exception e) {
 
@@ -105,10 +106,17 @@ public class CacheDownloader implements Runnable {
 				numWritten += numRead;
 
 				int percentage = (int) (((double) numWritten / (double) length) * 100D);
-				Frame.label.setText("Updating cache: " + percentage + "%");
+
+				if (!Frame.downloadingClient) {
+					// Frame.label.setText("Updating cache: " + percentage +
+					// "%");
+					Frame.progressBar.setValue(percentage);
+					Frame.progressBar.setString("Updating cache: " + percentage + "%");
+				}
 			}
 
-			Frame.label.setText("Ready.");
+			// Frame.label.setText("Ready.");
+			Frame.progressBar.setString("Ready.");
 		} catch (Exception exception) {
 			exception.printStackTrace();
 		} finally {

@@ -16,6 +16,8 @@ import launcher.Configuration;
 
 public class Checksum {
 
+	public static final boolean USE_TEXTFILE_UPDATING = true;
+	
 	public static String getLocalClientVersion() {
 		String version = "";
 		try {
@@ -74,7 +76,7 @@ public class Checksum {
 		BufferedWriter writer;
 		try {
 			writer = new BufferedWriter(new FileWriter(Configuration.LOCAL_CLIENT_VERSION_PATH));
-			System.out.println("write: " + getRemoteClientVersion());
+			System.out.println("write client: " + getRemoteClientVersion());
 			writer.write(getRemoteClientVersion());
 			writer.close();
 		} catch (Exception e) {
@@ -86,7 +88,7 @@ public class Checksum {
 		BufferedWriter writer;
 		try {
 			writer = new BufferedWriter(new FileWriter(Configuration.LOCAL_CACHE_VERSION_PATH));
-			System.out.println("write: " + getRemoteCacheVersion());
+			System.out.println("write cache: " + getRemoteCacheVersion());
 			writer.write(getRemoteCacheVersion());
 			writer.close();
 		} catch (Exception e) {
@@ -111,7 +113,6 @@ public class Checksum {
 		if (!file.exists()) {
 			try {
 				file.createNewFile();
-				writeCurrentCacheVersion();
 			} catch (Exception e) {
 			}
 		}
@@ -122,12 +123,7 @@ public class Checksum {
 		File file = new File(Configuration.LOCAL_CLIENT_VERSION_PATH);
 		if (!file.exists()) {
 			return false;
-			/*
-			 * try { file.createNewFile(); writeCurrentClientVersion(); return
-			 * false; } catch (Exception e) { }
-			 */
 		} else if (!getLocalClientVersion().equals(getRemoteClientVersion())) {
-			// writeCurrentClientVersion();
 			return false;
 		}
 		return true;
@@ -137,40 +133,31 @@ public class Checksum {
 		File file = new File(Configuration.LOCAL_CACHE_VERSION_PATH);
 		if (!file.exists()) {
 			return false;
-			/*
-			 * try { file.createNewFile(); writeCurrentCacheVersion(); return
-			 * false; } catch (Exception e) { }
-			 */
 		} else if (!getLocalCacheVersion().equals(getRemoteCacheVersion())) {
-			// writeCurrentCacheVersion();
 			return false;
 		}
 		return true;
 	}
 
 	public static boolean isClientUpToDate() {
-		if (Configuration.USE_TEXTFILE_UPDATING) {
+		if (USE_TEXTFILE_UPDATING) {
 			return handleTextClientUpdate();
 		}
 
 		File client = new File(Configuration.CLIENT_LOCATION);
 		String localChecksum = getLocalChecksum(client);
 		String remoteChecksum = getRemoteChecksum(Configuration.CLIENT_URL);
-		// System.out.println("localclient: " + localChecksum);
-		// System.out.println("webclient--: " + remoteChecksum);
 		return localChecksum.equals(remoteChecksum);
 	}
 
 	public static boolean isCacheUpToDate() {
-		if (Configuration.USE_TEXTFILE_UPDATING) {
+		if (USE_TEXTFILE_UPDATING) {
 			return handleTextCacheUpdate();
 		}
 
 		File cache = new File(Configuration.CACHE_LOCATION);
 		String localChecksum = getLocalChecksum(cache);
 		String remoteChecksum = getRemoteChecksum(Configuration.CACHE_URL);
-		// System.out.println("localcache: " + localChecksum);
-		// System.out.println("webcache--: " + remoteChecksum);
 		return localChecksum.equals(remoteChecksum);
 	}
 

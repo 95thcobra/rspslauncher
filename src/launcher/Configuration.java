@@ -7,10 +7,8 @@ public class Configuration {
 	public static final String TITLE = "Launcher";
 
 	/**
-	 * Update by checking versions textfile. You only need to update these if
-	 * USE_TEXTFILE_UPDATING is enabled!
+	 * Update paths
 	 */
-	public static final boolean USE_TEXTFILE_UPDATING = true;
 	public static final String CLIENT_VERSION_URL = "http://guthix.org/clientversion.txt";
 	public static final String CACHE_VERSION_URL = "http://guthix.org/cacheversion.txt";
 	public static final String LOCAL_CLIENT_VERSION_PATH = System.getProperty("user.home") + File.separator + "clientversion.txt";
@@ -37,4 +35,5 @@ public class Configuration {
 	public static final String FORUM_URL = "http://google.com/";
 	public static final String VOTE_URL = "http://google.com/";
 	public static final String STORE_URL = "http://google.com/";
+	public static final String HIGHSCORES_URL = "http://google.com/";
 }
