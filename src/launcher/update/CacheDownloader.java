@@ -31,7 +31,7 @@ public class CacheDownloader implements Runnable {
 	}
 
 	private String getCacheDir() {
-		String cacheLoc = Configuration.CACHE_DIR;
+		String cacheLoc = Configuration.CACHE_DIRECTORY;
 		File cacheDir = new File(cacheLoc);
 		if (!cacheDir.exists()) {
 			cacheDir.mkdir();
@@ -134,7 +134,7 @@ public class CacheDownloader implements Runnable {
 	}
 
 	private String getArchivedName() {
-		return Configuration.CACHE_SAVE;
+		return Configuration.CACHE_ZIP_NAME;
 	}
 
 	private void unZip() {

@@ -2,6 +2,7 @@ package launcher.core.buttons;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 
 import javax.swing.JOptionPane;
 
@@ -19,6 +20,16 @@ public class ButtonListener implements ActionListener {
 		String command = event.getActionCommand().toLowerCase();
 		switch (command) {
 		case "play now":
+			File client = new File(Configuration.CLIENT_LOCATION);
+			if (!client.exists()) {
+				JOptionPane.showMessageDialog(null, "Your client is outdated, press fetch update.", "Launcher", JOptionPane.INFORMATION_MESSAGE);
+				return;
+			}
+			File cache = new File(Configuration.CACHE_LOCATION);
+			if (!cache.exists()) {
+				JOptionPane.showMessageDialog(null, "Your cache is outdated, press fetch update.", "Launcher", JOptionPane.INFORMATION_MESSAGE);
+				return;
+			}
 			if (!Checksum.isClientUpToDate()) {
 				JOptionPane.showMessageDialog(null, "Your client is outdated, press fetch update.", "Launcher", JOptionPane.INFORMATION_MESSAGE);
 				return;
@@ -30,7 +41,7 @@ public class ButtonListener implements ActionListener {
 			Client.runClient();
 			break;
 		case "fetch update":
-			//Frame.label.setText("Checking for updates...");
+			// Frame.label.setText("Checking for updates...");
 			Frame.progressBar.setString("Checking for updates...");
 			Update.check();
 			break;
