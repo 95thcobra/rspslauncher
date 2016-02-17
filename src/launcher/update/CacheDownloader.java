@@ -48,6 +48,7 @@ public class CacheDownloader implements Runnable {
 	}
 
 	public CacheDownloader downloadCache() {
+		busy = true;
 		try {
 			File location = new File(getCacheDir());
 			File version = new File(getCacheDir() + "/cacheVersion" + getCacheVersion() + ".dat");
@@ -74,11 +75,13 @@ public class CacheDownloader implements Runnable {
 				unZip();
 			}
 			// Frame.label.setText("Ready.");
-			Frame.progressBar.setString("Ready.");
+			//Frame.progressBar.setString("Ready.");
 			Checksum.writeUpdateToFileCache();
 		} catch (Exception e) {
 
 		}
+		Frame.progressBar.setString("Ready.");
+		busy = false;
 		return null;
 	}
 
@@ -136,14 +139,17 @@ public class CacheDownloader implements Runnable {
 	private String getArchivedName() {
 		return Configuration.CACHE_ZIP_NAME;
 	}
+	
+	public static boolean busy = false;
 
 	private void unZip() {
-
+		busy = true;
 		try {
 			InputStream in = new BufferedInputStream(new FileInputStream(fileToExtract));
 			ZipInputStream zin = new ZipInputStream(in);
 			ZipEntry e;
-
+			
+			int count = 0;
 			while ((e = zin.getNextEntry()) != null) {
 
 				if (e.isDirectory()) {
@@ -156,12 +162,14 @@ public class CacheDownloader implements Runnable {
 					}
 					unzip(zin, getCacheDir() + e.getName());
 				}
+				Frame.progressBar.setString("Unzipping... " + (count++ / 78) + "%");
 			}
 			zin.close();
-
+			Frame.progressBar.setString("Ready.");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		busy = false;
 	}
 
 	private void unzip(ZipInputStream zin, String s) throws IOException {

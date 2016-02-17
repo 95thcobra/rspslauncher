@@ -10,6 +10,7 @@ import launcher.Configuration;
 import launcher.core.Checksum;
 import launcher.core.Client;
 import launcher.core.Frame;
+import launcher.update.CacheDownloader;
 import launcher.update.Update;
 import launcher.utility.Utility;
 
@@ -20,6 +21,10 @@ public class ButtonListener implements ActionListener {
 		String command = event.getActionCommand().toLowerCase();
 		switch (command) {
 		case "play now":
+			if (CacheDownloader.busy) {
+				JOptionPane.showMessageDialog(null, "Can't do that while downloading cache.", "Launcher", JOptionPane.INFORMATION_MESSAGE);
+				return;
+			}
 			File client = new File(Configuration.CLIENT_LOCATION);
 			if (!client.exists()) {
 				JOptionPane.showMessageDialog(null, "Your client is outdated, press fetch update.", "Launcher", JOptionPane.INFORMATION_MESSAGE);
@@ -41,6 +46,10 @@ public class ButtonListener implements ActionListener {
 			Client.runClient();
 			break;
 		case "fetch update":
+			if (CacheDownloader.busy) {
+				JOptionPane.showMessageDialog(null, "Can't do that while downloading cache.", "Launcher", JOptionPane.INFORMATION_MESSAGE);
+				return;
+			}
 			// Frame.label.setText("Checking for updates...");
 			Frame.progressBar.setString("Checking for updates...");
 			Update.check();
