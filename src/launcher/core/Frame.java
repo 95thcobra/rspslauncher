@@ -38,6 +38,10 @@ public class Frame extends JFrame {
 		setTitle(Configuration.TITLE);
 		setIconImage(Utility.getImage("icon.png"));
 	}
+	
+	public void close() {
+		dispose();
+	}
 
 	public void init() {
 		setup();

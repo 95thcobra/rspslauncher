@@ -9,8 +9,10 @@ import launcher.core.Frame;
  *
  */
 public class Launcher {
+	public static Frame frame;
+	
 	public static void main(String[] args) {
-		Frame frame = new Frame();
+		frame = new Frame();
 		frame.init();
 	}
 }
